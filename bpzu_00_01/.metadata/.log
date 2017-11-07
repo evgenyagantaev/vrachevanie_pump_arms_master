@@ -1,0 +1,51 @@
+!SESSION 2017-11-03 18:45:40.603 -----------------------------------------------
+eclipse.buildId=4.6.3.M20170301-0400
+java.version=1.8.0_144
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=ru_RU
+Framework arguments:  -product org.eclipse.epp.package.cpp.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.cpp.product
+
+!ENTRY org.eclipse.egit.ui 2 0 2017-11-03 18:46:32.988
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\root'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY fr.ac6.mcu.ide 1 1 2017-11-03 18:46:33.534
+!MESSAGE Started RMI Server, listening on port 21112
+
+!ENTRY org.eclipse.core.resources 2 567 2017-11-03 18:47:40.386
+!MESSAGE Failure occurred reading .project file.
+!SUBENTRY 1 org.eclipse.core.resources 2 567 2017-11-03 18:47:40.386
+!MESSAGE For input string: ""
+!STACK 0
+java.lang.NumberFormatException: For input string: ""
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at org.eclipse.core.internal.resources.ProjectDescriptionReader.endLinkType(ProjectDescriptionReader.java:769)
+	at org.eclipse.core.internal.resources.ProjectDescriptionReader.endElement(ProjectDescriptionReader.java:388)
+	at com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.endElement(Unknown Source)
+	at com.sun.org.apache.xerces.internal.parsers.AbstractXMLDocumentParser.emptyElement(Unknown Source)
+	at com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.scanStartElement(Unknown Source)
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(Unknown Source)
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(Unknown Source)
+	at com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(Unknown Source)
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(Unknown Source)
+	at com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(Unknown Source)
+	at com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(Unknown Source)
+	at com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(Unknown Source)
+	at com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(Unknown Source)
+	at com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(Unknown Source)
+	at com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl.parse(Unknown Source)
+	at org.eclipse.core.internal.resources.ProjectDescriptionReader.read(ProjectDescriptionReader.java:926)
+	at org.eclipse.core.internal.resources.ProjectDescriptionReader.read(ProjectDescriptionReader.java:958)
+	at org.eclipse.core.internal.resources.Workspace.loadProjectDescription(Workspace.java:1919)
+	at org.eclipse.ui.internal.wizards.datatransfer.WizardProjectsImportPage$ProjectRecord.setProjectName(WizardProjectsImportPage.java:228)
+	at org.eclipse.ui.internal.wizards.datatransfer.WizardProjectsImportPage$ProjectRecord.<init>(WizardProjectsImportPage.java:170)
+	at org.eclipse.ui.internal.wizards.datatransfer.WizardProjectsImportPage.lambda$3(WizardProjectsImportPage.java:904)
+	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:119)
+!SUBENTRY 1 org.eclipse.core.resources 2 567 2017-11-03 18:47:40.389
+!MESSAGE Empty name detected for linked resource with type '1' and location ''.

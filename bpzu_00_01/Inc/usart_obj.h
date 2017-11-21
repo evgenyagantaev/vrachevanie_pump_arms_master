@@ -37,4 +37,9 @@ int get_new_message_received_flag();
 
 void command_interpreter();
 
+void eeprom_write_right_pressure(uint32_t right_pressure);
+void eeprom_write_left_pressure(uint32_t left_pressure);
+int32_t eeprom_read_right_pressure();
+int32_t eeprom_read_left_pressure();
+
 #endif /* USART_OBJ_H_ */

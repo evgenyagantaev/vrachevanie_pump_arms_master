@@ -42,9 +42,10 @@ void one_hz_timer_poll(void)
 			current_pressure = current_pressure - 25;
 		else
 			current_pressure = 0;
-		uint32_t lower_pressure = inflator_get_lower_pressure()/10;
+		inflator_set_current_pressure(current_pressure);
+
 		sprintf(message, "h%d_%d_%d_%d_%d_%dl0_%d_270_270_0_0\r\n",
-				inflator_get_motor_flag(), current_pressure, lower_pressure, lower_pressure,
+				inflator_get_motor_flag(), current_pressure, inflator_get_right_lower_pressure(), inflator_get_left_lower_pressure(),
 				input_analizer_get_line_flags(7), input_analizer_get_line_flags(3),
 				current_pressure);
 		//HAL_UART_Transmit(&huart1, message, strlen((const char *)message), 500);

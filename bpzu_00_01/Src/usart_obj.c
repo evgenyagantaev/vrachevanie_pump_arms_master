@@ -10,6 +10,34 @@
 
 #include "inflator_obj.h"
 
+#define EEPROM_BASE_ADDRESS (uint32_t *)0x08080000
+
+void eeprom_write_right_pressure(uint32_t right_pressure)
+{
+	HAL_FLASHEx_DATAEEPROM_Unlock();
+	HAL_FLASHEx_DATAEEPROM_Erase(EEPROM_BASE_ADDRESS);
+	HAL_FLASHEx_DATAEEPROM_Program(FLASH_TYPEPROGRAMDATA_WORD, EEPROM_BASE_ADDRESS, right_pressure);
+	HAL_FLASHEx_DATAEEPROM_Lock();
+}
+
+void eeprom_write_left_pressure(uint32_t left_pressure)
+{
+	HAL_FLASHEx_DATAEEPROM_Unlock();
+	HAL_FLASHEx_DATAEEPROM_Erase(EEPROM_BASE_ADDRESS+4);
+	HAL_FLASHEx_DATAEEPROM_Program(FLASH_TYPEPROGRAMDATA_WORD, EEPROM_BASE_ADDRESS+4, left_pressure);
+	HAL_FLASHEx_DATAEEPROM_Lock();
+}
+
+int32_t eeprom_read_right_pressure()
+{
+	return *(EEPROM_BASE_ADDRESS);
+}
+
+int32_t eeprom_read_left_pressure()
+{
+	return *(EEPROM_BASE_ADDRESS+4);
+}
+
 
 void usart_send_message(char *message)
 {
@@ -62,13 +90,17 @@ void command_interpreter()
 		{
 			sscanf((char *)input_message, "c7m%dp%d\r\n", &strip_number, &pressure);
 
-			set_lower_pressure(pressure*10);
+
 			if(strip_number == 1)
 			{
+				set_right_lower_pressure(pressure);
+				inflator_set_inflate_right_flag();
 				inflate_right_arm();
 			}
 			else if(strip_number == 2)
 			{
+				set_left_lower_pressure(pressure);
+				inflator_set_inflate_left_flag();
 				inflate_left_arm();
 			}
 			else if(strip_number == 0)
@@ -90,6 +122,17 @@ void command_interpreter()
 			}
 		}
 
+		if((strstr((char *)input_message, "c9m") != NULL) && (strstr((char *)input_message, "p") != NULL) && (strlen((char *)input_message) == 10))
+		{
+			sscanf((char *)input_message, "c9m%dp%d\r\n", &strip_number, &pressure);
+			// set lower pressure
+			if(strip_number == 1)
+				eeprom_write_right_pressure(pressure);
+			else if(strip_number == 2)
+				eeprom_write_left_pressure(pressure);
+			else
+				eeprom_write_left_pressure(pressure);
+		}
 
 		reset_new_message_received_flag();
 		input_message_index = 0;

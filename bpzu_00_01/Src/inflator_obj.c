@@ -11,38 +11,11 @@
 
 #include "pressure_sensor_obj.h"
 
+#include "math.h"
 
 
 
-void inflate_line(int line_number)
-{
-	volatile long i;
 
-	// pitanie na servoprivod on
-
-	// pwm na otkrytie ***********
-	// stop 1 Hz timer
-	timer1hz_stop();
-	// start 67 Hz timer
-	timer100hz_start(1); // 67 HZ;  1 - flag otkrytiya
-
-	//pauza
-	HAL_Delay(2000);
-	//for(i=0; i<50000000; i++);
-
-	// pwm na zakrytie
-	timer100hz_start(0); // 67 HZ;  0 - flag zakrytiya
-
-	//pauza
-	HAL_Delay(2000);
-	//for(i=0; i<50000000; i++);
-
-	// pitanie na servoprivod off
-	// stop 67 Hz timer
-	timer100hz_stop(); // 67 HZ
-	// start 1 Hz timer
-	timer1hz_start();
-}
 
 
 void inflator_turn_motor_on()
@@ -86,15 +59,38 @@ uint32_t inflator_get_current_pressure()
 
 void inflator_monitor()
 {
+	uint32_t real_pressure = current_pressure/10 - 25;
+
 	if(inflate_line_flag)
 	{
 
-		if(current_pressure < lower_pressure)
+		uint32_t lower_pressure;
+		uint32_t upper_pressure;
+		if (inflate_right_flag && (!inflate_left_flag))
+		{
+			lower_pressure = right_lower_pressure;
+			upper_pressure = right_upper_pressure;
+		}
+		else if((!inflate_right_flag) && inflate_left_flag)
+		{
+			lower_pressure = left_lower_pressure;
+			upper_pressure = left_upper_pressure;
+		}
+		else if(inflate_right_flag && inflate_left_flag)
+		{
+			if(left_lower_pressure > right_lower_pressure)
+				lower_pressure = left_lower_pressure;
+			else
+				lower_pressure = right_lower_pressure;
+			upper_pressure = lower_pressure + PRESSURE_GAP;
+		}
+
+		if(real_pressure < lower_pressure)
 		{
 			pump_up_flag = 1;
 
 		}
-		else if(current_pressure > upper_pressure)
+		else if(real_pressure > upper_pressure)
 		{
 			pump_up_flag = 0;
 			inflator_turn_motor_off();
@@ -102,6 +98,7 @@ void inflator_monitor()
 
 		if(pump_up_flag)
 			inflator_turn_motor_on();
+
 
 	}
 	else
@@ -111,15 +108,24 @@ void inflator_monitor()
 	}
 }
 
-void set_lower_pressure(uint32_t pressure)
+void set_right_lower_pressure(uint32_t pressure)
 {
-	lower_pressure = pressure;
-	upper_pressure = lower_pressure + PRESSURE_GAP;
+	right_lower_pressure = pressure;
+	right_upper_pressure = right_lower_pressure + PRESSURE_GAP;
+}
+void set_left_lower_pressure(uint32_t pressure)
+{
+	left_lower_pressure = pressure;
+	left_upper_pressure = left_lower_pressure + PRESSURE_GAP;
 }
 
-uint32_t inflator_get_lower_pressure()
+uint32_t inflator_get_right_lower_pressure()
 {
-	return lower_pressure;
+	return right_lower_pressure;
+}
+uint32_t inflator_get_left_lower_pressure()
+{
+	return left_lower_pressure;
 }
 
 void drop_pressure()
@@ -156,11 +162,18 @@ void inflate_both_arms()
 	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_RESET);
 	// pb3 = 0
 	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
-	// pb4 = 1
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
+	// pb4 = 0
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
 }
 
-
+void inflator_set_inflate_right_flag()
+{
+	inflate_right_flag = 1;
+}
+void inflator_set_inflate_left_flag()
+{
+	inflate_left_flag = 1;
+}
 
 
 

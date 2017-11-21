@@ -8,19 +8,24 @@
 #ifndef INFLATOR_OBJ_H_
 #define INFLATOR_OBJ_H_
 
-#define UPPER_PRESSURE 3150
-#define LOWER_PRESSURE 2900
-#define PRESSURE_GAP 250
+#define UPPER_PRESSURE 270
+#define LOWER_PRESSURE 245
+#define PRESSURE_GAP 25
 
 #include "gpio.h"
 
 static int line_inflated[4] = {0,0,0,0};
-static int *input_flags;
 static int pump_up_flag = 0;
 
-static uint32_t lower_pressure = LOWER_PRESSURE;
-static uint32_t upper_pressure = UPPER_PRESSURE;
-void set_lower_pressure(uint32_t pressure);
+static uint32_t left_lower_pressure = LOWER_PRESSURE;
+static uint32_t left_upper_pressure = UPPER_PRESSURE;
+void set_left_lower_pressure(uint32_t pressure);
+uint32_t inflator_get_left_lower_pressure();
+
+static uint32_t right_lower_pressure = LOWER_PRESSURE;
+static uint32_t right_upper_pressure = UPPER_PRESSURE;
+void set_right_lower_pressure(uint32_t pressure);
+uint32_t inflator_get_right_lower_pressure();
 
 static uint32_t current_pressure;
 void inflator_set_current_pressure(uint32_t pressure);
@@ -48,5 +53,10 @@ void drop_pressure();
 void inflate_right_arm();
 void inflate_left_arm();
 void inflate_both_arms();
+
+static int inflate_right_flag = 0;
+void inflator_set_inflate_right_flag();
+static int inflate_left_flag = 0;
+void inflator_set_inflate_left_flag();
 
 #endif /* INFLATOR_OBJ_H_ */

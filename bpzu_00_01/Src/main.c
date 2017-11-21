@@ -66,30 +66,36 @@ int main(void)
 	for(i=0; i<250000; i++);
 
 	// 1 blink
-	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_RESET);
-	for(i=0; i<250000; i++);
 	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_SET);
+	for(i=0; i<250000; i++);
+	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_RESET);
 	for(i=0; i<2500000; i++);
 
+	uint8_t aux_byte;
+	// read trash from usart
+	*usart_receive_byte() = (uint8_t)(USART1->RDR);
+	// clear flag
+	USART1->ISR &= ~0x00000020;
 
+	// Enable the UART Data Register not empty Interrupt
+	USART1->CR1 |= 0x00000020;  // rxne
+	// disable pe interrupt
+	USART1->CR1 &= ~0x00000100;  // pe int disable
 	/* USART1 interrupt Init */
 	HAL_NVIC_SetPriority(USART1_IRQn, 3, 0);
 	HAL_NVIC_EnableIRQ(USART1_IRQn);
 	//  NVIC->ISER[0U] = (uint32_t)(1UL << (((uint32_t)(int32_t)IRQn) & 0x1FUL));
-	/* Enable the UART Data Register not empty Interrupt */
-	//__HAL_UART_ENABLE_IT(huart, UART_IT_RXNE);
-	USART1->CR1 |= 0x00000020;  // rxne
-	// disable pe interrupt
-	USART1->CR1 &= ~0x00000100;  // pe int disable
+
+
 
 	// 2 blinks
-	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_RESET);
-	for(i=0; i<250000; i++);
 	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_SET);
 	for(i=0; i<250000; i++);
 	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_RESET);
 	for(i=0; i<250000; i++);
 	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_SET);
+	for(i=0; i<250000; i++);
+	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_RESET);
 	for(i=0; i<2500000; i++);
 
 
@@ -103,9 +109,10 @@ int main(void)
 	//debug; turn motor on
 	//inflator_turn_motor_on();
 
+	set_right_lower_pressure(eeprom_read_right_pressure());
+	set_left_lower_pressure(eeprom_read_left_pressure());
+
 	// 3 blinks
-	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_RESET);
-	for(i=0; i<250000; i++);
 	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_SET);
 	for(i=0; i<250000; i++);
 	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_RESET);
@@ -115,6 +122,8 @@ int main(void)
 	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_RESET);
 	for(i=0; i<250000; i++);
 	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_SET);
+	for(i=0; i<250000; i++);
+	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_RESET);
 	for(i=0; i<2500000; i++);
 
 

@@ -11,6 +11,8 @@
 
 #include "pressure_sensor_obj.h"
 
+#include "inflator_obj.h"
+
 void input_analizer_check_start_state()
 {
 	int i;
@@ -66,16 +68,28 @@ void input_analizer_check_lines()
 				{
 					inflator_rise_inflate_flag();
 				}
+
+				if(line_flags[3] && line_flags[7])
+				{
+					inflate_both_arms();
+					inflator_set_inflate_right_flag();
+					inflator_set_inflate_left_flag();
+				}
+				else if(line_flags[7])
+				{
+					inflate_right_arm();
+					inflator_set_inflate_right_flag();
+				}
+				else if(line_flags[3])
+				{
+					inflate_left_arm();
+					inflator_set_inflate_left_flag();
+				}
 			}
 		}
 	}
 
-	if(line_flags[3] && line_flags[4])
-		inflate_both_arms();
-	else if(line_flags[7])
-		inflate_right_arm();
-	else if(line_flags[3])
-		inflate_left_arm();
+
 
 	// pause
 	//HAL_Delay(30);
@@ -86,6 +100,7 @@ void input_analizer_check_lines()
 	//debug_valve_led_imitation();
 
 	// create message
+	/*
 	char aux_string[32];
 	message[0] = 0;	// reset string
 	for(i=0; i<8; i++)
@@ -94,11 +109,12 @@ void input_analizer_check_lines()
 		strncat(message, aux_string, 2);
 	}
 	strncat(message, "x\r\n", 3);
+	*/
 
 	uint32_t pressure = pressure_sensor_get_pressure();
 	inflator_set_current_pressure(pressure);
-	sprintf(aux_string, "%d\r\n", (int)pressure);
-	strncat(message, aux_string, strlen(aux_string));
+	//sprintf(aux_string, "%d\r\n", (int)pressure);
+	//strncat(message, aux_string, strlen(aux_string));
 
 }
 

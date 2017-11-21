@@ -12,6 +12,7 @@ RM := rm -rf
 -include Drivers/STM32L0xx_HAL_Driver/Src/subdir.mk
 -include Drivers/CMSIS/Device/ST/STM32L0xx/Source/Templates/gcc/subdir.mk
 -include Drivers/CMSIS/Device/ST/STM32L0xx/Source/Templates/subdir.mk
+-include .metadata/.plugins/org.eclipse.cdt.make.core/subdir.mk
 -include subdir.mk
 -include objects.mk
 
@@ -35,7 +36,7 @@ all: bpzu_00_01.elf
 bpzu_00_01.elf: $(OBJS) $(USER_OBJS) ../STM32L051K6Tx_FLASH.ld
 	@echo 'Building target: $@'
 	@echo 'Invoking: MCU GCC Linker'
-	arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -mfloat-abi=soft -specs=nosys.specs -specs=nano.specs -T"../STM32L051K6Tx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -lm -o "bpzu_00_01.elf" @"objects.list" $(USER_OBJS) $(LIBS)
+	arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -mfloat-abi=soft -specs=nosys.specs -specs=nano.specs -T"../STM32L051K6Tx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "bpzu_00_01.elf" @"objects.list" $(USER_OBJS) $(LIBS) -lm
 	@echo 'Finished building target: $@'
 	@echo ' '
 	$(MAKE) --no-print-directory post-build

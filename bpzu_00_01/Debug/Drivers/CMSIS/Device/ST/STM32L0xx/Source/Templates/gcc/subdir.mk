@@ -14,7 +14,7 @@ OBJS += \
 Drivers/CMSIS/Device/ST/STM32L0xx/Source/Templates/gcc/%.o: ../Drivers/CMSIS/Device/ST/STM32L0xx/Source/Templates/gcc/%.s
 	@echo 'Building file: $<'
 	@echo 'Invoking: MCU GCC Assembler'
-	@echo %cd%
+	@echo $(PWD)
 	arm-none-eabi-as -mcpu=cortex-m0plus -mthumb -mfloat-abi=soft -g -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '

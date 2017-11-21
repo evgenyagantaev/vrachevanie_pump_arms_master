@@ -13,32 +13,48 @@
 
 void input_analizer_check_start_state()
 {
+	int i;
+
 	// turn on high level on input lines (pa11 high)
 	HAL_GPIO_WritePin(out_lines_power_GPIO_Port, out_lines_power_Pin, GPIO_PIN_SET);
 	// pause
-	HAL_Delay(30);
+	//HAL_Delay(30);
+	for(i=0; i<2500; i++);
 	// check input lines and fill flags array
-	int i;
 	for(i=0; i<8; i++)
 	{
 		if(HAL_GPIO_ReadPin(in_left1_GPIO_Port, input_pins[i]) != GPIO_PIN_RESET)
 			start_state_line_flags[i] = 1;
 	}
 	// pause
-	HAL_Delay(30);
+	//HAL_Delay(30);
+	for(i=0; i<2500; i++);
 	// turn off high level on input lines (pa11 low)
 	HAL_GPIO_WritePin(out_lines_power_GPIO_Port, out_lines_power_Pin, GPIO_PIN_RESET);
+}
+
+void input_analizer_common_pressure_drop()
+{
+	int i;
+
+	for(i=0; i<8; i++)
+	{
+		start_state_line_flags[i] = line_flags[i];
+	}
 }
 
 
 void input_analizer_check_lines()
 {
+	int i;
+
 	// turn on high level on input lines (pa11 high)
 	HAL_GPIO_WritePin(out_lines_power_GPIO_Port, out_lines_power_Pin, GPIO_PIN_SET);
 	// pause
-	HAL_Delay(30);
+	//HAL_Delay(30);
+	for(i=0; i<2500; i++);
 	// check input lines and fill flags array
-	int i;
+
 	for(i=0; i<8; i++)
 	{
 		if(HAL_GPIO_ReadPin(in_left1_GPIO_Port, input_pins[i]) != GPIO_PIN_RESET)
@@ -53,8 +69,17 @@ void input_analizer_check_lines()
 			}
 		}
 	}
+
+	if(line_flags[3] && line_flags[4])
+		inflate_both_arms();
+	else if(line_flags[7])
+		inflate_right_arm();
+	else if(line_flags[3])
+		inflate_left_arm();
+
 	// pause
-	HAL_Delay(30);
+	//HAL_Delay(30);
+	for(i=0; i<2500; i++);
 	// turn off high level on input lines (pa11 low)
 	HAL_GPIO_WritePin(out_lines_power_GPIO_Port, out_lines_power_Pin, GPIO_PIN_RESET);
 
@@ -80,10 +105,10 @@ void input_analizer_check_lines()
 void input_analizer_send_status()
 {
 	//sprintf(message, "a0b0c1d0e0f0g0h0x\r\n");
-	usart_send_message(message);
+	//usart_send_message(message);
 }
 
-int *input_analizer_get_line_flags()
+int input_analizer_get_line_flags(int index)
 {
-	return line_flags;
+	return line_flags[index];
 }

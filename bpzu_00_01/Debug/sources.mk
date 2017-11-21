@@ -15,6 +15,7 @@ C_DEPS :=
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \
+.metadata/.plugins/org.eclipse.cdt.make.core \
 Drivers/CMSIS/Device/ST/STM32L0xx/Source/Templates/gcc \
 Drivers/CMSIS/Device/ST/STM32L0xx/Source/Templates \
 Drivers/STM32L0xx_HAL_Driver/Src \

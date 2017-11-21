@@ -19,6 +19,8 @@ static char delimeters[] = {'a','b','c','d','e','f','g','h'};
 void input_analizer_check_start_state();
 void input_analizer_check_lines();
 void input_analizer_send_status();
-int *input_analizer_get_line_flags();
+int input_analizer_get_line_flags(int index);
+
+void input_analizer_common_pressure_drop();
 
 #endif /* INPUT_ANALIZER_OBJ_H_ */

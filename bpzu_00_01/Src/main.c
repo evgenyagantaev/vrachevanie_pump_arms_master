@@ -9,6 +9,11 @@
 #include "usart_obj.h"
 #include "inflator_obj.h"
 
+extern UART_HandleTypeDef huart1;
+
+
+#define DEVICENAME "VRACHEVANIE_001"
+
 // Private constants ---------------------------------------------------------
 
 // Private variables ---------------------------------------------------------
@@ -30,6 +35,8 @@ static void ErrorHandler(void);
 int main(void)
 {
 
+	volatile long i;
+
 	/* MCU Configuration----------------------------------------------------------*/
 
 	/* Reset of all peripherals, Initializes the Flash interface and the Systick. */
@@ -43,7 +50,48 @@ int main(void)
 	MX_USART1_UART_Init();
 	MX_ADC_Init();
 
-  
+
+	//bluetooth startup configuration------------------------------------------------------------------
+	usart_send_message("^#^$^%");
+	for(i=0; i<2000000; i++); //wait some time with no data to enter command mode if connection is active
+	usart_send_message("\r\n");
+	for(i=0; i<2000000; i++); //wait some time with no data to enter command mode if connection is active
+	usart_send_message("AT+AB HostEvent Disable\r\n"); //disable notification strings, only for this session
+	for(i=0; i<25000; i++);
+	usart_send_message("AT+AB Config PIN=0000\r\n"); //set pin
+	for(i=0; i<25000; i++);
+	usart_send_message("AT+AB DefaultLocalName "DEVICENAME"\r\n"); //set device name***************************************************************************
+	for(i=0; i<25000; i++);
+	usart_send_message("AT+AB Bypass\r\n"); //start connection if connection is still available
+	for(i=0; i<250000; i++);
+
+	// 1 blink
+	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_RESET);
+	for(i=0; i<250000; i++);
+	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_SET);
+	for(i=0; i<2500000; i++);
+
+
+	/* USART1 interrupt Init */
+	HAL_NVIC_SetPriority(USART1_IRQn, 3, 0);
+	HAL_NVIC_EnableIRQ(USART1_IRQn);
+	//  NVIC->ISER[0U] = (uint32_t)(1UL << (((uint32_t)(int32_t)IRQn) & 0x1FUL));
+	/* Enable the UART Data Register not empty Interrupt */
+	//__HAL_UART_ENABLE_IT(huart, UART_IT_RXNE);
+	USART1->CR1 |= 0x00000020;  // rxne
+	// disable pe interrupt
+	USART1->CR1 &= ~0x00000100;  // pe int disable
+
+	// 2 blinks
+	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_RESET);
+	for(i=0; i<250000; i++);
+	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_SET);
+	for(i=0; i<250000; i++);
+	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_RESET);
+	for(i=0; i<250000; i++);
+	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_SET);
+	for(i=0; i<2500000; i++);
+
 
 	// turn on analog circuit
 	HAL_GPIO_WritePin(out_analog_onoff_GPIO_Port, out_analog_onoff_Pin, GPIO_PIN_SET);
@@ -55,6 +103,21 @@ int main(void)
 	//debug; turn motor on
 	//inflator_turn_motor_on();
 
+	// 3 blinks
+	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_RESET);
+	for(i=0; i<250000; i++);
+	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_SET);
+	for(i=0; i<250000; i++);
+	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_RESET);
+	for(i=0; i<250000; i++);
+	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_SET);
+	for(i=0; i<250000; i++);
+	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_RESET);
+	for(i=0; i<250000; i++);
+	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_SET);
+	for(i=0; i<2500000; i++);
+
+
     // main loop *******************************************************************************************
     // main loop *******************************************************************************************
     // main loop *******************************************************************************************
@@ -64,6 +127,8 @@ int main(void)
     {
     	one_hz_timer_poll();
     	inflator_monitor();
+    	usart_polling();
+    	command_interpreter();
     }
     // end main loop ***************************************************************************************
     // end main loop ***************************************************************************************

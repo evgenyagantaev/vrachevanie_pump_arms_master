@@ -4,50 +4,17 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../Src/adc.c \
-../Src/gpio.c \
-../Src/inflator_obj.c \
-../Src/input_analizer_obj.c \
-../Src/main.c \
-../Src/one_hz_timer_obj.c \
-../Src/pressure_sensor_obj.c \
-../Src/stm32l0xx_hal_msp.c \
-../Src/stm32l0xx_it.c \
-../Src/tim.c \
-../Src/usart.c \
-../Src/usart_obj.c 
+../.metadata/.plugins/org.eclipse.cdt.make.core/specs.c 
 
 OBJS += \
-./Src/adc.o \
-./Src/gpio.o \
-./Src/inflator_obj.o \
-./Src/input_analizer_obj.o \
-./Src/main.o \
-./Src/one_hz_timer_obj.o \
-./Src/pressure_sensor_obj.o \
-./Src/stm32l0xx_hal_msp.o \
-./Src/stm32l0xx_it.o \
-./Src/tim.o \
-./Src/usart.o \
-./Src/usart_obj.o 
+./.metadata/.plugins/org.eclipse.cdt.make.core/specs.o 
 
 C_DEPS += \
-./Src/adc.d \
-./Src/gpio.d \
-./Src/inflator_obj.d \
-./Src/input_analizer_obj.d \
-./Src/main.d \
-./Src/one_hz_timer_obj.d \
-./Src/pressure_sensor_obj.d \
-./Src/stm32l0xx_hal_msp.d \
-./Src/stm32l0xx_it.d \
-./Src/tim.d \
-./Src/usart.d \
-./Src/usart_obj.d 
+./.metadata/.plugins/org.eclipse.cdt.make.core/specs.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
-Src/%.o: ../Src/%.c
+.metadata/.plugins/org.eclipse.cdt.make.core/%.o: ../.metadata/.plugins/org.eclipse.cdt.make.core/%.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: MCU GCC Compiler'
 	@echo $(PWD)

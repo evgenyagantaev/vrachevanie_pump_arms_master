@@ -36,6 +36,9 @@
 #include "stm32l0xx_it.h"
 
 #include "one_hz_timer_obj.h"
+#include "usart_obj.h"
+
+#include "stm32l0xx_hal.h"
 
 /* USER CODE BEGIN 0 */
 
@@ -137,6 +140,39 @@ void ADC1_COMP_IRQHandler(void)
   /* USER CODE BEGIN ADC1_COMP_IRQn 1 */
 
   /* USER CODE END ADC1_COMP_IRQn 1 */
+}
+
+/**
+* @brief This function handles USART1 global interrupt / USART1 wake-up interrupt through EXTI line 25.
+*/
+void USART1_IRQHandler(void)
+{
+	//HAL_UART_IRQHandler(&huart1);
+
+	//if((__HAL_UART_GET_IT(huart, UART_IT_RXNE) != RESET) && (__HAL_UART_GET_IT_SOURCE(huart, UART_IT_RXNE) != RESET))
+	//{
+		//UART_Receive_IT(huart);
+	//}
+
+	if((USART1->ISR & 0x00000020) != 0x00000000)
+	{
+		// clear flag
+		USART1->ISR &= ~0x00000020;
+
+		//read data
+		*usart_receive_byte() = (uint8_t)(USART1->RDR);
+
+		// rise flag
+		set_new_char_received_flag();
+	}
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+	//HAL_UART_Receive(get_usart_handle(), usart_receive_byte(), 1, 500);
+
+	*usart_receive_byte() = (uint8_t)(huart->Instance->RDR);
+	set_new_char_received_flag();
 }
 
 /* USER CODE BEGIN 1 */

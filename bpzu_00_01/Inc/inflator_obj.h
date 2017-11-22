@@ -8,8 +8,8 @@
 #ifndef INFLATOR_OBJ_H_
 #define INFLATOR_OBJ_H_
 
-#define UPPER_PRESSURE 270
-#define LOWER_PRESSURE 245
+#define UPPER_PRESSURE 325
+#define LOWER_PRESSURE 300
 #define PRESSURE_GAP 25
 
 #include "gpio.h"

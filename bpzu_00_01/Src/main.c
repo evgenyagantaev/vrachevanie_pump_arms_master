@@ -98,8 +98,8 @@ int main(void)
 
 
 	/* USART1 interrupt Init */
-	HAL_NVIC_SetPriority(USART1_IRQn, 3, 0);
-	HAL_NVIC_EnableIRQ(USART1_IRQn);
+	//HAL_NVIC_SetPriority(USART1_IRQn, 3, 0);
+	//HAL_NVIC_EnableIRQ(USART1_IRQn);
 	//  NVIC->ISER[0U] = (uint32_t)(1UL << (((uint32_t)(int32_t)IRQn) & 0x1FUL));
 
 
@@ -117,8 +117,8 @@ int main(void)
 	//debug; turn motor on
 	//inflator_turn_motor_on();
 
-	set_right_lower_pressure(eeprom_read_right_pressure());
-	set_left_lower_pressure(eeprom_read_left_pressure());
+	//set_right_lower_pressure(eeprom_read_right_pressure());
+	//set_left_lower_pressure(eeprom_read_left_pressure());
 
 	// 3 blinks
 	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_SET);

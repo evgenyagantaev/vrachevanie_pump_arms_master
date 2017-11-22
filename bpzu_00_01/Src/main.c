@@ -66,10 +66,12 @@ int main(void)
 	for(i=0; i<250000; i++);
 
 	// 1 blink
+	//888888888888888888888888888888888888888888888888888
 	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_SET);
 	for(i=0; i<250000; i++);
 	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_RESET);
 	for(i=0; i<2500000; i++);
+	//888888888888888888888888888888888888888888888888888
 
 	uint8_t aux_byte;
 	// read trash from usart
@@ -81,14 +83,9 @@ int main(void)
 	USART1->CR1 |= 0x00000020;  // rxne
 	// disable pe interrupt
 	USART1->CR1 &= ~0x00000100;  // pe int disable
-	/* USART1 interrupt Init */
-	HAL_NVIC_SetPriority(USART1_IRQn, 3, 0);
-	HAL_NVIC_EnableIRQ(USART1_IRQn);
-	//  NVIC->ISER[0U] = (uint32_t)(1UL << (((uint32_t)(int32_t)IRQn) & 0x1FUL));
-
-
 
 	// 2 blinks
+	//88888888888888888888888888888888888888888888888888888
 	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_SET);
 	for(i=0; i<250000; i++);
 	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_RESET);
@@ -97,6 +94,17 @@ int main(void)
 	for(i=0; i<250000; i++);
 	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_RESET);
 	for(i=0; i<2500000; i++);
+	//88888888888888888888888888888888888888888888888888888
+
+
+	/* USART1 interrupt Init */
+	HAL_NVIC_SetPriority(USART1_IRQn, 3, 0);
+	HAL_NVIC_EnableIRQ(USART1_IRQn);
+	//  NVIC->ISER[0U] = (uint32_t)(1UL << (((uint32_t)(int32_t)IRQn) & 0x1FUL));
+
+
+
+
 
 
 	// turn on analog circuit

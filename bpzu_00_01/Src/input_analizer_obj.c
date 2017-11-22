@@ -69,18 +69,18 @@ void input_analizer_check_lines()
 					inflator_rise_inflate_flag();
 				}
 
-				if(line_flags[3] && line_flags[7])
+				if(line_flags[2] && line_flags[3] && line_flags[6] && line_flags[7])
 				{
 					inflate_both_arms();
 					inflator_set_inflate_right_flag();
 					inflator_set_inflate_left_flag();
 				}
-				else if(line_flags[7])
+				else if(line_flags[6] && line_flags[7])
 				{
 					inflate_right_arm();
 					inflator_set_inflate_right_flag();
 				}
-				else if(line_flags[3])
+				else if(line_flags[2] && line_flags[3])
 				{
 					inflate_left_arm();
 					inflator_set_inflate_left_flag();

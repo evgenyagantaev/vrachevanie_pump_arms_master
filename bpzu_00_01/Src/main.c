@@ -5,6 +5,7 @@
 #include "usart.h"
 #include "gpio.h"
 
+
 #include "one_hz_timer_obj.h"
 #include "usart_obj.h"
 #include "inflator_obj.h"
@@ -12,7 +13,7 @@
 extern UART_HandleTypeDef huart1;
 
 
-#define DEVICENAME "VRACHEVANIE_001"
+#define DEVICENAME "VRACHEVANIE_NOGI_001"
 
 // Private constants ---------------------------------------------------------
 
@@ -47,8 +48,17 @@ int main(void)
 
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
+	// set bluetooth control pin (turn bluetooth on)
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9, GPIO_PIN_SET);
 	MX_USART1_UART_Init();
 	MX_ADC_Init();
+
+	//MX_SPI1_Init();
+	//SPI1->CR2 &= ~SPI_CR2_TXEIE;   // disable txe interrupt
+	//SPI1->CR2 &= ~SPI_CR2_ERRIE;   // disable error interrupt
+	//SPI1->CR2 |= SPI_CR2_RXNEIE;   // enable rxne interrupt
+	// enable spi1
+	//SPI1->CR1 |= SPI_CR1_SPE;
 
 
 	//bluetooth startup configuration------------------------------------------------------------------
@@ -97,10 +107,10 @@ int main(void)
 	//88888888888888888888888888888888888888888888888888888
 
 
-	/* USART1 interrupt Init */
-	//HAL_NVIC_SetPriority(USART1_IRQn, 3, 0);
-	//HAL_NVIC_EnableIRQ(USART1_IRQn);
-	//  NVIC->ISER[0U] = (uint32_t)(1UL << (((uint32_t)(int32_t)IRQn) & 0x1FUL));
+	// USART1 interrupt Init
+	HAL_NVIC_SetPriority(USART1_IRQn, 3, 0);
+	HAL_NVIC_EnableIRQ(USART1_IRQn);
+	//   NVIC->ISER[0U] = (uint32_t)(1UL << (((uint32_t)(int32_t)IRQn) & 0x1FUL));
 
 
 

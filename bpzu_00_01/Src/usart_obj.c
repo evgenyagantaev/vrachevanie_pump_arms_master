@@ -138,7 +138,7 @@ void command_interpreter()
 		input_message_index = 0;
 		input_message[0] = 0;
 
-
+		set_bluetooth_idle_mark();
 
 	}
 }

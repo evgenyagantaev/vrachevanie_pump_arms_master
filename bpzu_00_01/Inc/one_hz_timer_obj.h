@@ -8,13 +8,20 @@
 #ifndef INC_ONE_HZ_TIMER_OBJ_H_
 #define INC_ONE_HZ_TIMER_OBJ_H_
 
-static int one_hz_counter;
-static int systick_counter;
+
+
+static int one_hz_counter = 0;
+static int systick_counter = 0;
 static int one_hz_timer_flag = 0;
+
+#define BLUETOOTH_IDLE_PERIOD 300
+static int bluetooth_idle_mark = 0;
+void set_bluetooth_idle_mark();
 
 static char *message[128];
 
 void one_hz_timer_tick(void);
 void one_hz_timer_poll(void);
+void one_hz_schedule_task(void);
 
 #endif /* INC_ONE_HZ_TIMER_OBJ_H_ */

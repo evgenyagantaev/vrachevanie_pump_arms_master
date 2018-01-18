@@ -116,6 +116,15 @@ void MX_GPIO_Init(void)
 	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 	// reset bluetooth control pins (turn bluetooth off)
 	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9, GPIO_PIN_RESET);
+
+	// pb10 valves power control pin; output
+	GPIO_InitStruct.Pin = GPIO_PIN_10;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+	// reset valves power control pins (turn valves power off)
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10, GPIO_PIN_RESET);
 }
 
 /* USER CODE BEGIN 2 */

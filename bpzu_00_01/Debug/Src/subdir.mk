@@ -5,6 +5,8 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../Src/adc.c \
+../Src/bluetooth_time_relay_object.c \
+../Src/bluetooth_time_relay_task.c \
 ../Src/gpio.c \
 ../Src/inflator_obj.c \
 ../Src/input_analizer_obj.c \
@@ -19,6 +21,8 @@ C_SRCS += \
 
 OBJS += \
 ./Src/adc.o \
+./Src/bluetooth_time_relay_object.o \
+./Src/bluetooth_time_relay_task.o \
 ./Src/gpio.o \
 ./Src/inflator_obj.o \
 ./Src/input_analizer_obj.o \
@@ -33,6 +37,8 @@ OBJS += \
 
 C_DEPS += \
 ./Src/adc.d \
+./Src/bluetooth_time_relay_object.d \
+./Src/bluetooth_time_relay_task.d \
 ./Src/gpio.d \
 ./Src/inflator_obj.d \
 ./Src/input_analizer_obj.d \

@@ -37,8 +37,10 @@
 
 #include "one_hz_timer_obj.h"
 #include "usart_obj.h"
+#include "gpio.h"
 
 #include "stm32l0xx_hal.h"
+
 
 /* USER CODE BEGIN 0 */
 
@@ -69,9 +71,8 @@ void NMI_Handler(void)
 */
 void HardFault_Handler(void)
 {
-  /* USER CODE BEGIN HardFault_IRQn 0 */
+  long i;
 
-  /* USER CODE END HardFault_IRQn 0 */
   while (1)
   {
 	  // frequent blinks
@@ -82,9 +83,7 @@ void HardFault_Handler(void)
 	for(i=0; i<2500000; i++);
 	//888888888888888888888888888888888888888888888888888
   }
-  /* USER CODE BEGIN HardFault_IRQn 1 */
 
-  /* USER CODE END HardFault_IRQn 1 */
 }
 
 /**

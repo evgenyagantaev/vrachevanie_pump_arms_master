@@ -74,6 +74,13 @@ void HardFault_Handler(void)
   /* USER CODE END HardFault_IRQn 0 */
   while (1)
   {
+	  // frequent blinks
+	//888888888888888888888888888888888888888888888888888
+	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_SET);
+	for(i=0; i<250000; i++);
+	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_RESET);
+	for(i=0; i<2500000; i++);
+	//888888888888888888888888888888888888888888888888888
   }
   /* USER CODE BEGIN HardFault_IRQn 1 */
 

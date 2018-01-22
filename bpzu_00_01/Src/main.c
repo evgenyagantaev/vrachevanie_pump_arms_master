@@ -108,8 +108,8 @@ int main(void)
 
 
 	// USART1 interrupt Init
-	HAL_NVIC_SetPriority(USART1_IRQn, 3, 0);
-	HAL_NVIC_EnableIRQ(USART1_IRQn);
+	//HAL_NVIC_SetPriority(USART1_IRQn, 3, 0);
+	//HAL_NVIC_EnableIRQ(USART1_IRQn);
 	//   NVIC->ISER[0U] = (uint32_t)(1UL << (((uint32_t)(int32_t)IRQn) & 0x1FUL));
 
 

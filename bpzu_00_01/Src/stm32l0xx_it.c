@@ -163,7 +163,7 @@ void USART1_IRQHandler(void)
 	if((USART1->ISR & 0x00000020) != 0x00000000)
 	{
 		// clear flag
-		USART1->ISR &= ~0x00000020;
+		//USART1->ISR &= ~0x00000020;
 
 		//read data
 		*usart_receive_byte() = (uint8_t)(USART1->RDR);
@@ -173,13 +173,6 @@ void USART1_IRQHandler(void)
 	}
 }
 
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
-{
-	//HAL_UART_Receive(get_usart_handle(), usart_receive_byte(), 1, 500);
-
-	*usart_receive_byte() = (uint8_t)(huart->Instance->RDR);
-	set_new_char_received_flag();
-}
 
 
 void SPI1_IRQHandler(void)

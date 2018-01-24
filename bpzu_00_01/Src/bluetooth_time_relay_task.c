@@ -5,4 +5,12 @@
  *      Author: root
  */
 
+#include "bluetooth_time_relay_object.h"
 
+void bluetooth_time_relay_task()
+{
+	if(bluetooth_on_flag)
+	{
+
+	}
+}

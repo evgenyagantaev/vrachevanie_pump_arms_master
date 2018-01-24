@@ -50,6 +50,9 @@ int main(void)
 	MX_GPIO_Init();
 	// set bluetooth control pin (turn bluetooth on)
 	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9, GPIO_PIN_SET);
+	//pause
+	for(i=0; i<250000; i++);
+
 	MX_USART1_UART_Init();
 	MX_ADC_Init();
 

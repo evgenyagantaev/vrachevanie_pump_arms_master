@@ -9,6 +9,7 @@
 #include "usart_obj.h"
 
 #include "inflator_obj.h"
+#include "bluetooth_time_relay_object.h"
 
 #define EEPROM_BASE_ADDRESS (uint32_t *)0x08080000
 
@@ -61,6 +62,9 @@ void usart_polling()
 		input_message[input_message_index] = usart_in_data;
 
 		reset_new_char_received_flag();
+		// reset usart silence timout 
+		bluetooth_time_relay_counter_reset();
+
 
 		if(input_message_index < (INPUT_MESSAGE_LENGTH -1))
 			input_message_index++;
@@ -70,10 +74,6 @@ void usart_polling()
 			set_new_message_received_flag();
 		}
 
-		//if(HAL_UART_Receive_IT(&huart1, (uint8_t *)usart_receive_byte(), 1) != HAL_OK)
-		//{
-			//Error_Handler();
-		//}
 	}
 }
 

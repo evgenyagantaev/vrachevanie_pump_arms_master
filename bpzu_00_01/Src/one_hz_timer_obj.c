@@ -88,3 +88,7 @@ void set_bluetooth_idle_mark()
 
 
 
+int get_one_hz_counter()
+{
+	return one_hz_counter;
+}

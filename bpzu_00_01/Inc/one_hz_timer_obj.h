@@ -14,10 +14,6 @@ static int one_hz_counter = 0;
 static int systick_counter = 0;
 static int one_hz_timer_flag = 0;
 
-#define BLUETOOTH_IDLE_PERIOD 300
-static int bluetooth_idle_mark = 0;
-void set_bluetooth_idle_mark();
-
 static char *message[128];
 
 void one_hz_timer_tick(void);

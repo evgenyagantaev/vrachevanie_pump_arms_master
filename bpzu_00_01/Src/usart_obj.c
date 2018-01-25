@@ -5,13 +5,50 @@
  *      Author: root
  */
 
+// USART interrupts:				flag	enable bit
+//Transmit data register empty	 	TXE 	TXEIE
+//CTS interrupt					 	CTSIF 	CTSIE
+//Transmission Complete			 	TC 		TCIE
+//Receive data register not empty 	RXNE	RXNEIE
+//Overrun error detected 			ORE
+//Idle line detected				IDLE 	IDLEIE
+//Parity error 						PE 		PEIE
+//LIN break 						LBDF 	LBDIE
+//Noise Flag, Overrun error and
+//Framing Error in multibuffer
+//communication. 					NF or
+//									ORE or
+//									FE 		EIE
+//Character match 					CMF 	CMIE
+//Receiver timeout error 			RTOF 	RTOIE
+//End of Block 						EOBF 	EOBIE
+//Wakeup from Stop mode 			WUF 	WUFIE
+
+// usart cr1
+// (28)M1 (27)EOBIE (26)RTOIE (25-21)DEAT[4:0] (20-16)DEDT[4:0] (15)OVER8 (14)CMIE
+// (13)MME (12)M0 (11)WAKE (10)PCE (9)PS (8)PEIE (7)TXEIE (6)TCIE (5)RXNEIE (4)IDLEIE
+// (3)TE (2)RE (1)UESM (0)UE
+
+//RXNE: Read data register not empty
+//This bit is set by hardware when the content of the RDR shift register has been transferred
+//to the USARTx_RDR register. It is cleared by a read to the USARTx_RDR register. The
+//RXNE flag can also be cleared by writing 1 to the RXFRQ in the USARTx_RQR register.
+//An interrupt is generated if RXNEIE=1 in the USARTx_CR1 register.
+
+// usart icr (interrupt flag clear register)
+// (20)WUCF (17)CMCF (12)EOBCF (11)RTOCF (9)CTSCF (8)LBDCF (6)TCCF (4)IDLECF (3)ORECF
+// (2)NCF (1)FECF (0)PECF
+// drop all flags -> 0000 0000 | 0001 0010 | 0001 1011 | 0101 1111 -> 0x00121b5f
+
+
+
 #include "string.h"
 #include "usart_obj.h"
 
 #include "inflator_obj.h"
 #include "bluetooth_time_relay_object.h"
 
-#define EEPROM_BASE_ADDRESS (uint32_t *)0x08080000
+#define EEPROM_BASE_ADDRESS (uint32_t)0x08080000
 
 void eeprom_write_right_pressure(uint32_t right_pressure)
 {
@@ -31,12 +68,12 @@ void eeprom_write_left_pressure(uint32_t left_pressure)
 
 int32_t eeprom_read_right_pressure()
 {
-	return *(EEPROM_BASE_ADDRESS);
+	return *((uint32_t *)(EEPROM_BASE_ADDRESS));
 }
 
 int32_t eeprom_read_left_pressure()
 {
-	return *(EEPROM_BASE_ADDRESS+4);
+	return *((uint32_t *)(EEPROM_BASE_ADDRESS+4));
 }
 
 
@@ -138,7 +175,6 @@ void command_interpreter()
 		input_message_index = 0;
 		input_message[0] = 0;
 
-		set_bluetooth_idle_mark();
 
 	}
 }

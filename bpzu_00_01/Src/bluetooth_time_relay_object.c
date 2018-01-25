@@ -5,7 +5,7 @@
  *      Author: root
  */
 #include "bluetooth_time_relay_object.h"
-#include "one_hz_timer.h"
+#include "one_hz_timer_obj.h"
 #include "gpio.h"
 
 
@@ -22,7 +22,7 @@ void bluetooth_time_relay_counter_increment()
 
 void bluetooth_time_relay_counter_reset()
 {
-	bluetooth_time_relay_counter = 0;
+	bluetooth_off_counter = 0;
 }
 void bluetooth_off()
 {
@@ -36,7 +36,7 @@ int get_bluetooth_off_flag()
 	return bluetooth_off_flag;
 }
 
-int set_bluetooth_off_flag()
+void set_bluetooth_off_flag()
 {
 	bluetooth_off_flag = 1;
 }
@@ -46,7 +46,7 @@ int get_bluetooth_on_flag()
 	return bluetooth_on_flag;
 }
 
-int reset_bluetooth_on_flag();
+void reset_bluetooth_on_flag()
 {
 	bluetooth_on_flag = 0;
 }

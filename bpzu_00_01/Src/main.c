@@ -86,7 +86,6 @@ int main(void)
 	for(i=0; i<2500000; i++);
 	//888888888888888888888888888888888888888888888888888
 
-	uint8_t aux_byte;
 	// read trash from usart
 	*usart_receive_byte() = (uint8_t)(USART1->RDR);
 	// clear flag
@@ -111,8 +110,8 @@ int main(void)
 
 
 	// USART1 interrupt Init
-	//HAL_NVIC_SetPriority(USART1_IRQn, 3, 0);
-	//HAL_NVIC_EnableIRQ(USART1_IRQn);
+	HAL_NVIC_SetPriority(USART1_IRQn, 3, 0);
+	HAL_NVIC_EnableIRQ(USART1_IRQn);
 	//   NVIC->ISER[0U] = (uint32_t)(1UL << (((uint32_t)(int32_t)IRQn) & 0x1FUL));
 
 

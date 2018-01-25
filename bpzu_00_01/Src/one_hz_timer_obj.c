@@ -65,27 +65,14 @@ void one_hz_timer_poll(void)
 			odd_even_flag = 1;
 		}
 
-		one_hz_schedule_task();
-
-
 	}
 }
 
 
 void one_hz_schedule_task(void)
 {
-	// check bluetooth idle period
-	if((one_hz_counter - bluetooth_idle_mark) > BLUETOOTH_IDLE_PERIOD)
-		// reset bluetooth control pin (turn bluetooth off)
-		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9, GPIO_PIN_RESET);
+
 }
-
-
-void set_bluetooth_idle_mark()
-{
-	bluetooth_idle_mark = one_hz_counter;
-}
-
 
 
 int get_one_hz_counter()

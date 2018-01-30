@@ -80,7 +80,7 @@ void HardFault_Handler(void)
 	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_SET);
 	for(i=0; i<250000; i++);
 	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_RESET);
-	for(i=0; i<2500000; i++);
+	for(i=0; i<250000; i++);
 	//888888888888888888888888888888888888888888888888888
   }
 
@@ -189,12 +189,21 @@ void USART1_IRQHandler(void)
 {
 	if((USART1->ISR & 0x00000020) != 0x00000000)
 	{
+		// disable usart1 interrupts
+		HAL_NVIC_DisableIRQ(USART1_IRQn);
+		// stop systick timer
+		SysTick->CTRL  &= ~SysTick_CTRL_ENABLE_Msk;
 
 		//read data
 		*usart_receive_byte() = (uint8_t)(USART1->RDR);
 
 		// rise flag
 		set_new_char_received_flag();
+
+		// enable usart1 interrupts
+		HAL_NVIC_EnableIRQ(USART1_IRQn);
+		// start systick timer
+		SysTick->CTRL  |= SysTick_CTRL_ENABLE_Msk;
 	}
 
 	// clear all interrupt flags

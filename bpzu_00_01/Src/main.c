@@ -109,6 +109,10 @@ int main(void)
 	//88888888888888888888888888888888888888888888888888888
 
 
+	// clear all usart irq flags
+	USART1->ICR |= 0x00121b5f;
+	// pause
+	for(i=0; i<250000; i++);
 	// USART1 interrupt Init
 	HAL_NVIC_SetPriority(USART1_IRQn, 3, 0);
 	HAL_NVIC_EnableIRQ(USART1_IRQn);

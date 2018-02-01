@@ -63,6 +63,9 @@ void inflator_monitor()
 
 	if(inflate_line_flag)
 	{
+		// power up valves
+		// pb10 = 1
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10, GPIO_PIN_SET);
 
 		uint32_t lower_pressure;
 		uint32_t upper_pressure;
@@ -130,10 +133,10 @@ uint32_t inflator_get_left_lower_pressure()
 
 void drop_pressure()
 {
-	// pb5 = 1
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_SET);
-	// pb3 = pb4 = 0
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4|GPIO_PIN_3, GPIO_PIN_RESET);
+	// pb4 = 1
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
+	// pb3 = pb5 = 0
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5|GPIO_PIN_3, GPIO_PIN_RESET);
 }
 
 void inflate_right_arm()
@@ -148,12 +151,12 @@ void inflate_right_arm()
 
 void inflate_left_arm()
 {
-	// pb5 = 0
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_RESET);
+	// pb5 = 1
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_SET);
 	// pb3 = 0
 	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
-	// pb4 = 1
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
+	// pb4 = 0
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
 }
 
 void inflate_both_arms()

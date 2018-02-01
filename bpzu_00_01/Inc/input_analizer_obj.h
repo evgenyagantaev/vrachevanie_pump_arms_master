@@ -23,4 +23,7 @@ int input_analizer_get_line_flags(int index);
 
 void input_analizer_common_pressure_drop();
 
+int left_hand_condition();
+void inflator_set_inflate_left_flag();
+
 #endif /* INPUT_ANALIZER_OBJ_H_ */

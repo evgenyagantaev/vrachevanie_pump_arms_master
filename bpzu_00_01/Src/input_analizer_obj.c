@@ -62,32 +62,35 @@ void input_analizer_check_lines()
 		if(HAL_GPIO_ReadPin(in_left1_GPIO_Port, input_pins[i]) != GPIO_PIN_RESET)
 		{
 			line_flags[i] = 1;
-			if(!start_state_line_flags[i])
-			{
-				if(!inflator_get_inflate_flag())   // not yet inflate line signal (never before)
-				{
-					inflator_rise_inflate_flag();
-				}
 
-				if((line_flags[2] || line_flags[3]) && (line_flags[6] || line_flags[7]))
-				{
-					inflate_both_arms();
-					inflator_set_inflate_right_flag();
-					inflator_set_inflate_left_flag();
-				}
-				else if(line_flags[6] || line_flags[7])
-				{
-					inflate_right_arm();
-					inflator_set_inflate_right_flag();
-				}
-				else if(line_flags[2] || line_flags[3])
-				{
-					inflate_left_arm();
-					inflator_set_inflate_left_flag();
-				}
-			}
 		}
 	}
+
+	if((left_hand_condition() || right_hand_condition()) && (!inflator_get_inflate_flag()))
+	{
+		// not yet inflate line signal (never before)
+		inflator_rise_inflate_flag();
+	}
+
+	if(left_hand_condition() && right_hand_condition())
+	{
+		inflate_both_arms();
+		inflator_set_inflate_right_flag();
+		inflator_set_inflate_left_flag();
+	}
+	else if(left_hand_condition())
+	{
+		inflate_left_arm();
+		inflator_set_inflate_left_flag();
+	}
+	else if(right_hand_condition())
+	{
+		inflate_right_arm();
+		inflator_set_inflate_right_flag();
+	}
+
+
+
 
 
 
@@ -117,6 +120,33 @@ void input_analizer_check_lines()
 	//strncat(message, aux_string, strlen(aux_string));
 
 }
+
+int left_hand_condition()
+{
+	int l1, l2, l3, l4;
+
+	l1 = line_flags[0] && (!start_state_line_flags[0]);
+	l2 = line_flags[1] && (!start_state_line_flags[1]);
+	l3 = line_flags[2] && (!start_state_line_flags[2]);
+	l4 = line_flags[3] && (!start_state_line_flags[3]);
+
+	return l1 || l2 || l3 || l4;
+}
+
+int right_hand_condition()
+{
+	int l5, l6, l7, l8;
+
+	l5 = line_flags[4] && (!start_state_line_flags[4]);
+	l6 = line_flags[5] && (!start_state_line_flags[5]);
+	l7 = line_flags[6] && (!start_state_line_flags[6]);
+	l8 = line_flags[7] && (!start_state_line_flags[7]);
+
+	return l5 || l6 || l7 || l8;
+}
+
+
+
 
 void input_analizer_send_status()
 {

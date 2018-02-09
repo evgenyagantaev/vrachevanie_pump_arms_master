@@ -178,6 +178,12 @@ void inflator_set_inflate_left_flag()
 	inflate_left_flag = 1;
 }
 
-
-
+int inflator_get_inflate_right_flag()
+{
+	return inflate_right_flag;
+}
+int inflator_get_inflate_left_flag()
+{
+	return inflate_left_flag;
+}
 

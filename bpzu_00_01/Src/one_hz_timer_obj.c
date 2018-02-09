@@ -51,8 +51,7 @@ void one_hz_timer_poll(void)
 
 		sprintf(message, "l%d_%d_%d_%d_%d_%d\r\n",
 				inflator_get_motor_flag(), current_pressure, inflator_get_right_lower_pressure(),
-				inflator_get_left_lower_pressure(),input_analizer_get_line_flags(2)||input_analizer_get_line_flags(3),
-				input_analizer_get_line_flags(6)||input_analizer_get_line_flags(7));
+				inflator_get_left_lower_pressure(),inflator_get_inflate_right_flag(), inflator_get_inflate_left_flag());
 		//HAL_UART_Transmit(&huart1, message, strlen((const char *)message), 500);
 		usart_send_message(message);
 

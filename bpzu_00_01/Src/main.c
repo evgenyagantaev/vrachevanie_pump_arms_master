@@ -133,8 +133,8 @@ int main(void)
 	//debug; turn motor on
 	//inflator_turn_motor_on();
 
-	//set_right_lower_pressure(eeprom_read_right_pressure());
-	//set_left_lower_pressure(eeprom_read_left_pressure());
+	set_right_lower_pressure(eeprom_read_right_pressure());
+	set_left_lower_pressure(eeprom_read_left_pressure());
 
 	// 3 blinks
 	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_SET);

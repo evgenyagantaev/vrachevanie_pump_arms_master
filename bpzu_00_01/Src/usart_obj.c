@@ -56,6 +56,8 @@ void eeprom_write_right_pressure(uint32_t right_pressure)
 	HAL_FLASHEx_DATAEEPROM_Erase(EEPROM_BASE_ADDRESS);
 	HAL_FLASHEx_DATAEEPROM_Program(FLASH_TYPEPROGRAMDATA_WORD, EEPROM_BASE_ADDRESS, right_pressure);
 	HAL_FLASHEx_DATAEEPROM_Lock();
+
+	set_right_lower_pressure(right_pressure);
 }
 
 void eeprom_write_left_pressure(uint32_t left_pressure)
@@ -64,6 +66,8 @@ void eeprom_write_left_pressure(uint32_t left_pressure)
 	HAL_FLASHEx_DATAEEPROM_Erase(EEPROM_BASE_ADDRESS+4);
 	HAL_FLASHEx_DATAEEPROM_Program(FLASH_TYPEPROGRAMDATA_WORD, EEPROM_BASE_ADDRESS+4, left_pressure);
 	HAL_FLASHEx_DATAEEPROM_Lock();
+
+	set_left_lower_pressure(left_pressure);
 }
 
 int32_t eeprom_read_right_pressure()

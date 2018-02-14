@@ -10,7 +10,7 @@
 
 #include "gpio.h"
 
-static char message[64];
+//static char message[64];
 static int line_flags[8] = {0,0,0,0,0,0,0,0};
 static int start_state_line_flags[8] = {0,0,0,0,0,0,0,0};
 static uint16_t input_pins[] = {in_left1_Pin,in_left2_Pin,in_left3_Pin,in_left4_Pin,in_right1_Pin,in_right2_Pin,in_right3_Pin,in_right4_Pin};

@@ -56,9 +56,11 @@ void inflate_both_arms();
 
 static int inflate_right_flag = 0;
 void inflator_set_inflate_right_flag();
+void inflator_reset_inflate_right_flag();
 int inflator_get_inflate_right_flag();
 static int inflate_left_flag = 0;
 void inflator_set_inflate_left_flag();
+void inflator_reeet_inflate_left_flag();
 int inflator_get_inflate_left_flag();
 
 #endif /* INFLATOR_OBJ_H_ */

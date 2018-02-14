@@ -26,5 +26,6 @@ void set_bluetooth_off_flag();
 int get_bluetooth_on_flag();
 void reset_bluetooth_on_flag();
 
+void bluetooth_time_relay_task();
 
 #endif /* INC_BLUETOOTH_TIME_RELAY_OBJECT_H_ */

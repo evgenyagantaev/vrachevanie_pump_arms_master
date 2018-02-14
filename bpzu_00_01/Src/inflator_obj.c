@@ -93,7 +93,7 @@ void inflator_monitor()
 			pump_up_flag = 1;
 
 		}
-		else if(real_pressure > upper_pressure)
+		else if(real_pressure >= upper_pressure)
 		{
 			pump_up_flag = 0;
 			inflator_turn_motor_off();
@@ -113,13 +113,30 @@ void inflator_monitor()
 
 void set_right_lower_pressure(uint32_t pressure)
 {
-	right_lower_pressure = pressure;
-	right_upper_pressure = right_lower_pressure + PRESSURE_GAP;
+	if(pressure != 0)
+	{
+		right_lower_pressure = pressure;
+		right_upper_pressure = right_lower_pressure + PRESSURE_GAP;
+	}
+	else
+	{
+		right_lower_pressure = LOWER_PRESSURE;
+		right_upper_pressure = right_lower_pressure + PRESSURE_GAP;
+	}
 }
 void set_left_lower_pressure(uint32_t pressure)
 {
-	left_lower_pressure = pressure;
-	left_upper_pressure = left_lower_pressure + PRESSURE_GAP;
+	if(pressure != 0)
+	{
+		left_lower_pressure = pressure;
+		left_lower_pressure = right_lower_pressure + PRESSURE_GAP;
+	}
+	else
+	{
+		left_lower_pressure = LOWER_PRESSURE;
+		left_lower_pressure = right_lower_pressure + PRESSURE_GAP;
+	}
+
 }
 
 uint32_t inflator_get_right_lower_pressure()
@@ -173,9 +190,17 @@ void inflator_set_inflate_right_flag()
 {
 	inflate_right_flag = 1;
 }
+void inflator_reset_inflate_right_flag()
+{
+	inflate_right_flag = 0;
+}
 void inflator_set_inflate_left_flag()
 {
 	inflate_left_flag = 1;
+}
+void inflator_reset_inflate_left_flag()
+{
+	inflate_left_flag = 0;
 }
 
 int inflator_get_inflate_right_flag()

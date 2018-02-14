@@ -8,12 +8,14 @@
 
 #include "one_hz_timer_obj.h"
 #include "usart_obj.h"
+#include "bluetooth_time_relay_object.h"
 #include "inflator_obj.h"
 
 extern UART_HandleTypeDef huart1;
 
 
 #define DEVICENAME "VRACHEVANIE_NOGI_001"
+//#define DEVICENAME "VRACHEVANIE_RUKI_001"
 
 // Private constants ---------------------------------------------------------
 
@@ -48,6 +50,7 @@ int main(void)
 
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
+
 	// set bluetooth control pin (turn bluetooth on)
 	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9, GPIO_PIN_SET);
 	//pause
@@ -150,6 +153,17 @@ int main(void)
 	HAL_GPIO_WritePin(GPIOA, out_led_Pin, GPIO_PIN_RESET);
 	for(i=0; i<2500000; i++);
 
+	//debug
+	//inflator_turn_motor_on();
+
+	while(1)
+	{
+		one_hz_timer_poll();
+		inflator_monitor();
+		usart_polling();
+		command_interpreter();
+		bluetooth_time_relay_task();
+	}
 
     // main loop *******************************************************************************************
     // main loop *******************************************************************************************
@@ -158,10 +172,7 @@ int main(void)
     // main loop *******************************************************************************************
     while(1)
     {
-    	one_hz_timer_poll();
-    	inflator_monitor();
-    	usart_polling();
-    	command_interpreter();
+
     }
     // end main loop ***************************************************************************************
     // end main loop ***************************************************************************************

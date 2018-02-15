@@ -59,7 +59,9 @@ uint32_t inflator_get_current_pressure()
 
 void inflator_monitor()
 {
-	uint32_t real_pressure = current_pressure/10 - 25;
+	int32_t real_pressure = current_pressure/10 - 25;
+	if(real_pressure < 0)
+		real_pressure = 0;
 
 	if(inflate_line_flag)
 	{
@@ -129,12 +131,12 @@ void set_left_lower_pressure(uint32_t pressure)
 	if(pressure != 0)
 	{
 		left_lower_pressure = pressure;
-		left_lower_pressure = right_lower_pressure + PRESSURE_GAP;
+		left_upper_pressure = left_lower_pressure + PRESSURE_GAP;
 	}
 	else
 	{
 		left_lower_pressure = LOWER_PRESSURE;
-		left_lower_pressure = right_lower_pressure + PRESSURE_GAP;
+		left_upper_pressure = left_lower_pressure + PRESSURE_GAP;
 	}
 
 }

@@ -114,8 +114,7 @@ void input_analizer_check_lines()
 	strncat(message, "x\r\n", 3);
 	*/
 
-	uint32_t pressure = pressure_sensor_get_pressure();
-	inflator_set_current_pressure(pressure);
+
 	//sprintf(aux_string, "%d\r\n", (int)pressure);
 	//strncat(message, aux_string, strlen(aux_string));
 

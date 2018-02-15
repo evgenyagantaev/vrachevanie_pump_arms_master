@@ -171,8 +171,6 @@ void command_interpreter()
 				eeprom_write_right_pressure(pressure);
 			else if(strip_number == 2)
 				eeprom_write_left_pressure(pressure);
-			else
-				eeprom_write_left_pressure(pressure);
 		}
 
 		reset_new_message_received_flag();

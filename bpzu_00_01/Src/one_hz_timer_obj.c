@@ -39,12 +39,14 @@ void one_hz_timer_poll(void)
 		// measure pressure
 		uint32_t pressure = pressure_sensor_get_pressure();
 		inflator_set_current_pressure(pressure);
+		
 		uint32_t current_pressure = inflator_get_current_pressure()/10;
 		if(current_pressure > 25)
 			current_pressure = current_pressure - 25;
 		else
 			current_pressure = 0;
-		inflator_set_current_pressure(current_pressure);
+		
+		//inflator_set_current_pressure(current_pressure);  // huinya kakaya-to
 
 
 

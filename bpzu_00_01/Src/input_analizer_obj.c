@@ -90,33 +90,10 @@ void input_analizer_check_lines()
 	}
 
 
-
-
-
-
 	// pause
-	//HAL_Delay(30);
 	for(i=0; i<2500; i++);
 	// turn off high level on input lines (pa11 low)
 	HAL_GPIO_WritePin(out_lines_power_GPIO_Port, out_lines_power_Pin, GPIO_PIN_RESET);
-
-	//debug_valve_led_imitation();
-
-	// create message
-	/*
-	char aux_string[32];
-	message[0] = 0;	// reset string
-	for(i=0; i<8; i++)
-	{
-		sprintf(aux_string, "%c%d", delimeters[i], line_flags[i]);
-		strncat(message, aux_string, 2);
-	}
-	strncat(message, "x\r\n", 3);
-	*/
-
-
-	//sprintf(aux_string, "%d\r\n", (int)pressure);
-	//strncat(message, aux_string, strlen(aux_string));
 
 }
 
